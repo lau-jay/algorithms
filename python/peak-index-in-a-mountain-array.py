@@ -30,3 +30,14 @@ class Solution:
             if A[i - 1] < A[i]:
                 mountain_index = i
         return mountain_index
+
+    def peakIndexInMountainArray2(self, A: List[int]) -> int:
+        i, j = 0, len(A) - 1
+        while i < j:
+            mid = (i + j) // 2
+
+            if A[mid] > A[(mid + 1)]:
+                j = mid
+            else:
+                i = mid + 1
+        return i
