@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 """
 Given an array, rotate the array to the right by k steps, where k is non-negative.
 
@@ -24,6 +23,7 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 Could you do it in-place with O(1) extra space?
 
 """
+from typing import List
 
 
 class Solution:
@@ -59,8 +59,54 @@ class Solution:
         nums[k:] = nums[0:-k]
         nums[0:k] = temp
 
+    def rotate2(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        解法2, 通用
+        >>> s = Solution()
+        >>> test1, k1 = [-1,-100,3,99],2
+        >>> test2, k2 = [1],0
+        >>> test3, k3 = [1,2,3,4,5], 1
+        >>> test4, k4 = [1,2], 3
+        >>> s.rotate2(test1, k1)
+        >>> print(test1)
+        [3, 99, -1, -100]
+        >>> s.rotate2(test2, k2)
+        >>> print(test2)
+        [1]
+        >>> s.rotate2(test3, k3)
+        >>> print(test3)
+        [5, 1, 2, 3, 4]
+        >>> s.rotate2(test4, k4)
+        >>> print(test4)
+        [2, 1]
+        """
+        if not k:
+            return
+        # 边界条件, k可能比数组长度还大
+        k = k % len(nums)
+        # 0 to  len(nums) - 1- k
+        i, j = 0, len(nums) - 1 - k
+        while i < j:
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 1
+            j -= 1
+
+        # k+1 to end (len(nums) - 1)
+        i, j = len(nums) - k, len(nums) - 1
+        while i < j:
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 1
+            j -= 1
+
+        # reverse
+        i, j = 0, len(nums) - 1
+        while i < j:
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 1
+            j -= 1
+
 
 if __name__ == '__main__':
     import doctest
     doctest.testmod(verbose=True)
-
